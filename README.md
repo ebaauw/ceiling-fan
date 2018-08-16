@@ -25,7 +25,7 @@ With each pull on the chain, the fan speed cycles through _Off_, _High_, _Medium
 This hardware solution would be chaining the relays, connecting the NC (normally closed) output of one relay to the COM input of a second, and NO (normally open) output to the COM of a third.  This way, I can switch between four outputs: the second relay's NO and NC, and the third relay's NO and NC.  The second relay switches between _Off_ (NC) and _Low_ (NO), the third between _Medium_ (NC) and _High_ (NO), while the first relay switches between the second (NC) and third (NO) relays.
 
 R1 | R2 | R3 | R2 NC | R2 NO | R3 NC | R3 NC | Speed
----| -- | -- | ----- | ----- | ----- | ----- | ----- | -----
+---| -- | -- | ----- | ----- | ----- | ----- | -----
 off | off | off | power | | (no input) | | _Off_
 off | off | on* | power | | | (no input) | _Off_
 off | on | off | | power | (no input) | | _Low_
@@ -41,4 +41,4 @@ While I would still occasionally need to switch two relays for a single transiti
 
 ### First Proof of Concept
 Before messing with 240V, I figured I'd better create a low-voltage proof of concept.
-I got myself an Arduino Relay Shield v3, which has four 10A, 240V relays.  This still leaves the fourth relay available for direction control.  Using that, I build the following prototype, using my Ardino Starter Kit: ![](Poc/PoC 1_bb.jpg)
+I got myself an Arduino Relay Shield v3, which has four 10A, 240V relays.  This still leaves the fourth relay available for direction control.  Using that, I build the following prototype, using my Ardino Starter Kit: ![](https://github.com/ebaauw/ceiling-fan/blob/master/PoC/PoC%201_bb.jpg)
