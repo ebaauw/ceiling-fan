@@ -20,20 +20,20 @@ Before the switch broke, I already ordered two more Xiaomi switches, which just 
 ### Speed Control
 Even if the new switches won't break, it would be so much cooler also to be able to control the fan speed from HomeKit.  The in-wall smart dimmers I've seen are rated for lights only (and probably beyond my budget anyways).
 
-With each pull on the chain, the fan speed cycles through _Off_, _High_, _Medium_, _Low_.  The pull-chain switch has a simple mechanical mechanism, that switches it's input to one of three output wires (presumably connected to different coil windings on the AC motor).  So, at least in theory, fan speed could be controlled by three relays, when making sure at most one output line is powered at a time.  Doing that in software seem risky, given the beta status of deCONZ and the hobby status of homebridge-hue, so I'd prefer a hardware solution.
+With each pull on the chain, the fan speed cycles through _Off_, _High_, _Medium_, _Low_.  The pull-chain switch has a simple mechanical mechanism, that switches it's input to one of three output wires (presumably connected to different coil windings on the AC motor).  So, at least in theory, fan speed could be controlled by three switches, when making sure at most one output line is powered at a time.  Doing that in software seem risky, given the beta status of deCONZ and the hobby status of homebridge-hue, so I'd prefer a hardware solution.  Also, I haven't come across triple-gang in wall switches, so I'd need to use at least two.  No way two Xiaomi switches will fit, and two ubisys S2 switches per fan is beyond my budget.
 
-This hardware solution would be chaining the relays, connecting the NC (normally closed) output of one relay to the COM input of a second, and NO (normally open) output to the COM of a third.  This way, I can switch between four outputs: the second relay's NO and NC, and the third relay's NO and NC.  The second relay switches between _Off_ (NC) and _Low_ (NO), the third between _Medium_ (NC) and _High_ (NO), while the first relay switches between the second (NC) and third (NO) relays.
+The hardware solution would be based on chaining relays, connecting the NC (normally closed) output of one relay to the COM input of a second relay, and NO (normally open) output to the COM of a third relay.  This way, I can switch between four outputs: the second relay's NO and NC, and the third relay's NO and NC.  The second relay switches between _Off_ (NC) and _Low_ (NO), the third between _Medium_ (NC) and _High_ (NO), while the first relay switches between the second (NC) and third (NO) relays.
 
-R1 | R2 | R3 | R2 NC | R2 NO | R3 NC | R3 NC | Speed
----| -- | -- | ----- | ----- | ----- | ----- | -----
+RL1 | RL2 | RL3 | NC 2 | NO 2 | NC 3 | NC 3 | Speed
+----| --- | --- | ---- | ---- | ---- | ----- | -----
 off | off | off | power | | (no input) | | _Off_
 off | off | on* | power | | | (no input) | _Off_
-off | on | off | | power | (no input) | | _Low_
-off | on | on* | | power | | (no input) | _Low_
-on | off | off | (no input) | | power | | _Medium_
-on | off | on | (no input) | | | power | _High_
-on | on* | off | | (no input) | power | | _Medium_
-on | on* | on | | (no input) | | power | _High_
+off | on  | off | | power | (no input) | | _Low_
+off | on  | on* | | power | | (no input) | _Low_
+on  | off | off | (no input) | | power | | _Medium_
+on  | off | on  | (no input) | | | power | _High_
+on  | on* | off | | (no input) | power | | _Medium_
+on  | on* | on  | | (no input) | | power | _High_
 
 \*) Since there's no power on the input, best leave the relay off.
 
@@ -41,4 +41,10 @@ While I would still occasionally need to switch two relays for a single transiti
 
 ### First Proof of Concept
 Before messing with 240V, I figured I'd better create a low-voltage proof of concept.
-I got myself an Arduino Relay Shield v3, which has four 10A, 240V relays.  This still leaves the fourth relay available for direction control.  Using that, I build the following prototype, using my Ardino Starter Kit: ![](https://github.com/ebaauw/ceiling-fan/blob/master/PoC/PoC%201_bb.jpg)
+I got myself an [Ardino Starter Kit](https://www.arduino.cc/en/Main/ArduinoStarterKit) and a [Seeed Relay Shield v3](http://wiki.seeedstudio.com/Relay_Shield_v3/), with four relays.  This still leaves a fourth relay available for direction control.
+
+To test the logic, I build the following prototype: ![](https://github.com/ebaauw/ceiling-fan/blob/master/PoC/PoC%201_bb.jpg)
+
+While the relays themselves should be able to switch 240V AC up to 10A, I'm pretty sure that this will blow up the board (and probably the Arduino).  In this prototype I use the relays to switch 5V DC from the Arduino.  Not something you'd normally need a relay for, but fine for testing the logic.  Relay 1 is simulating the fan's direction, switching between _Down_ (NC) and _Up_ (NO, blue LED).  Relays 2 to 4 are used for the fan speed: relay 2 switches between relays 4 (NC) and 3 (NO); relay 4 switches between _Off_ (NC) and _Low_ (NO, green LED); relay 3 switches between _Medium_ (NC, yellow led) and _High_ (NO, red led).  The switches are used to simulate the pull-chain switches: S1 for pulling the speed switch and S2 for changing the direction switch.  I programmed the Arduino with the following [sketch](https://github.com/ebaauw/ceiling-fan/blob/master/PoC/PoC.ino).
+
+This works as intended.  Next step will be figuring out the radio logic.
