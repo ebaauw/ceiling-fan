@@ -1,5 +1,5 @@
 
-// sketch_fan_poc1.ino
+// PoC.ino
 // Copyright © 2018 Erik Baauw. All rights reserved.
 //
 // First proof of concept for ceiling fan controller.
