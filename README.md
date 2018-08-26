@@ -15,7 +15,7 @@ My first attempt was to try and install a ZigBee in-wall switch in the fan's can
 
 However, the Xiaomi switch broke while I was balancing the fan's blades (frequently switching on and off the fan using the Xiaomi switch).  The relays switch off automatically a second after switching on, or won't switch on at all.  Not sure if this is just my luck, or whether the switch doesn't like the fan starting up.  The fan is 50W, while the switch is rated for 2500W (10A).  Incidentally, one of my OSRAM Lightify smart plugs (the old model) exhibits the same symptoms.  It was powering a portable fan...
 
-Before the switch broke, I already ordered two more Xiaomi switches, which just arrived.  Only these are the newer ones without a Neutral connection (they use a minute current on the one of the L1 or L2 wires to power the electronics).  Time permitting, I'll try and install these to see if they won't break as well.
+Before the switch broke, I already ordered two more Xiaomi switches.  They turned out to be the newer ones without a Neutral connection (they use a minute current on the one of the L1 or L2 wires to power the electronics).  That means they're powered off, when the pull-chain is in the off position.   Also, these are the end-device variants (`lumi.ctrl_neutral2`).  I mutilated the housing and installed them, fingers crossed.  I do find that deCONZ occasionally seems to lose the connection to the end-device.  Shutting down deCONZ and resetting the RaspBee seems to solve the issue.
 
 ### Speed Control
 Even if the new switches won't break, it would be so much cooler also to be able to control the fan speed from HomeKit.  The in-wall smart dimmers I've seen are rated for lights only (and probably beyond my budget anyways).
