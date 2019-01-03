@@ -10,12 +10,17 @@ I have three regular ceiling fans.  Each fan has a single-phase 240V, 50Hz AC mo
 
 The fan has four connection wires under the canopy: Motor Life (black), Lights Life (also black), Neutral (blue) and Ground (green/yellow).  My ceiling outlet only has three wires: Life (black, from the traditional wall switch) Neutral (blue), Earth (green/yellow), so the motor and lights are controlled by a single wall switch wire.  The smart lights prefer to be powered on always, so the wall switch is used only to cut power from the fan, not for regular control.  As I don't want to pull a new switched life wire, replacing the wall switch is not an option.
 
-### ZigBee in-wall switch
-My first attempt was to try and install a ZigBee in-wall switch in the fan's canopy, in between the incoming life wire and the motor life wire.  I mutilated an Xiaomi Aqara in-wall switch (`lumi.ctrl_ln2`), took off the front and cut off the edges supporting the keys, leaving a 6cm by 6cm by 3cm box, which fits the canopy.  After assembling the fan, it worked.  No speed control, but deCONZ was able to switch the fan on and off at speed preset by the pull-chain switch.
+### ZigBee In-Wall Switch
+My first attempt was to try and install a ZigBee in-wall switch in the fan's canopy, in between the incoming life wire and the motor life wire.  I mutilated an Xiaomi Aqara in-wall switch (`lumi.ctrl_ln2.aq1`), took off the front and cut off the edges supporting the keys, leaving a 6cm by 6cm by 3cm box, which fits the canopy.  After assembling the fan, it worked.  No speed control, but deCONZ was able to switch the fan on and off at speed preset by the pull-chain switch.
 
 However, the Xiaomi switch broke while I was balancing the fan's blades (frequently switching on and off the fan using the Xiaomi switch).  The relays switch off automatically a second after switching on, or won't switch on at all.  Not sure if this is just my luck, or whether the switch doesn't like the fan starting up.  The fan is 50W, while the switch is rated for 2500W (10A).  Incidentally, one of my OSRAM Lightify smart plugs (the old model) exhibits the same symptoms.  It was powering a portable fan...
 
 Before the switch broke, I already ordered two more Xiaomi switches.  They turned out to be the newer ones without a Neutral connection (they use a minute current on the one of the L1 or L2 wires to power the electronics).  That means they're powered off, when the pull-chain is in the off position.   Also, these are the end-device variants (`lumi.ctrl_neutral2`), now fully supported in deCONZ v2.05.37.  I mutilated the housing and installed them, fingers crossed.
+
+#### Update after Several Months.
+I got another `lumi.ctrl_ln2.aq1` switch for the third fan.  It worked for a couple of weeks, but now shows same defect as the first one.  It crashes every 60 to 70 seconds, sending a new device announcement and switching off the relays on subsequent startup.  The relays seem to work fine, the problem seems to be with the switch's power supply and/or firmware.  I haven't been able to isolate a particular ZigBee message that would cause the crash.  Also the crashes are too regular to be caused by irregularities in the mains power.  I double checked the first switch: it shows the same behaviour, but crashes even more frequently.
+
+The two `lumi.ctrl_neutral2` switches still work.  I ordered a third one (I hope) to replace the broken switch.
 
 ### Speed Control
 Even if the new switches won't break, it would be so much cooler also to be able to control the fan speed from HomeKit.  The in-wall smart dimmers I've seen are rated for lights only (and probably beyond my budget anyways).
