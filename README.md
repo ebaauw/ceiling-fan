@@ -48,8 +48,14 @@ While I would still occasionally need to switch two relays for a single transiti
 Before messing with 240V, I figured I'd better create a low-voltage proof of concept.
 I got myself an [Ardino Starter Kit](https://www.arduino.cc/en/Main/ArduinoStarterKit) and a [Seeed Relay Shield v3](http://wiki.seeedstudio.com/Relay_Shield_v3/), with four relays.  This still leaves a fourth relay available for direction control.
 
-To test the logic, I build the following prototype: ![](https://github.com/ebaauw/ceiling-fan/blob/master/PoC/PoC%201_bb.jpg)
+To test the logic, I build the following prototype: ![image](https://raw.githubusercontent.com/ebaauw/ceiling-fan/main/PoC/PoC%201_bb.jpg)
+
 
 While the relays themselves should be able to switch 240V AC up to 10A, I'm pretty sure that this will blow up the board (and probably the Arduino).  In this prototype I use the relays to switch 5V DC from the Arduino.  Not something you'd normally need a relay for, but fine for testing the logic.  Relay 1 is simulating the fan's direction, switching between _Down_ (NC) and _Up_ (NO, blue LED).  Relays 2 to 4 are used for the fan speed: relay 2 switches between relays 4 (NC) and 3 (NO); relay 4 switches between _Off_ (NC) and _Low_ (NO, green LED); relay 3 switches between _Medium_ (NC, yellow led) and _High_ (NO, red led).  The switches are used to simulate the pull-chain switches: S1 for pulling the speed switch and S2 for changing the direction switch.  I programmed the Arduino with the following [sketch](https://github.com/ebaauw/ceiling-fan/blob/master/PoC/PoC.ino).
 
 This works as intended.  Next step will be figuring out the radio logic.
+
+### MHCOZY 4-Channel Zigbee Relay
+I finally found an AC-powered, 4-channel Zigbee relay with NO and NC outputs per channel: the [MHCOZY](https://www.amazon.nl/dp/B0C9Y5LTFJ/ref=pe_28126711_487102941_TE_SCE_dp_1).
+According to its specs, the relays can be used to drive motors, so they should be happy with the fan's inductive load.
+The downsides: it's quite large, 8 x 8 x 3cm, and it's Tuya.
