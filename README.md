@@ -1,7 +1,7 @@
 # ceiling-fan
 
 ## Ceiling Fan control from deCONZ
-Copyright © 2018 Erik Baauw. All rights reserved.
+Copyright © 2018-2024 Erik Baauw. All rights reserved.
 
 This repository documents my efforts for controlling my dumb ceiling fans from [deCONZ](https://github.com/dresden-elektronik/deconz-rest-plugin), and, through [homebridge](https://github.com/nfarina/homebridge) and [homebridge-hue](https://github.com/ebaauw/homebridge-hue), from HomeKit.
 As no-one seems to have done this before (see [deCONZ issue #717](https://github.com/dresden-elektronik/deconz-rest-plugin/issues/717)), I decided to try and hack together my own solution.
